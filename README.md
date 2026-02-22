@@ -1,4 +1,4 @@
-![Chess Buzz Banner](https://raw.githubusercontent.com/pralinkhaira/chess-buzz/refs/heads/main/res/chessbuzz_banner_uppercase.png?token=GHSAT0AAAAAADUC66IGWPEWBAZ4DTLWKCLE2M2SVHA)
+![Chess Buzz Banner]
 
 # Chess Buzz: AI-Powered Chess Assistant
 
@@ -141,6 +141,8 @@ To keep the popup pinned for easy access:
 
 For a full walkthrough, visit the [Getting Started Guide](GETTING-STARTED.md).
 
+Not sure which engine to use? See the [Chess Engine Selection Guide](ENGINE-SELECTION-GUIDE.md).
+
 ---
 
 ## Local Development Setup
@@ -159,6 +161,82 @@ For a full walkthrough, visit the [Getting Started Guide](GETTING-STARTED.md).
 4. Verify your changes
 
 For deeper technical details, refer to the [Technical Overview](TECHNICAL-OVERVIEW.md).
+
+---
+
+## How to Add a New Engine Model
+
+Adding a new engine involves 5 steps across 4 files.
+
+### Step 1 - Add the engine files to `lib/engine/`
+
+Create a new folder named after your engine and place the required files inside:
+
+```
+lib/engine/
+  your-engine-name/
+    your-engine.js       (the JS/WASM UCI-compatible wrapper)
+    your-engine.wasm     (if WASM-based)
+    your-model.nnue      (if NNUE-based)
+```
+
+### Step 2 - Register it in `popup.js` inside `engineMap`
+
+```js
+const engineMap = {
+    'stockfish-17-nnue-79': 'stockfish-17-79/sf17-79.js',
+    // ... existing engines ...
+    'your-engine-name': 'your-engine-name/your-engine.js',  // add this
+}
+```
+
+Then add it to the correct loading branch inside `initialize_engine()` based on how it loads:
+
+- Plain JS Web Worker - add to the `new Worker()` branch
+- Modern WASM via dynamic import - add to the `module.default()` branch
+- NNUE model loading - name it with `nnue` in the key to trigger automatic model fetching
+- iframe-based engine (like lc0) - follow the lc0 pattern
+
+### Step 3 - Add the dropdown option in `popup.html`
+
+```html
+<select id="engine_select">
+    <!-- existing options -->
+    <option value="your-engine-name">Your Engine Display Name</option>
+</select>
+```
+
+### Step 4 - Add the same option in the full Settings page
+
+Add the identical `<option>` to the engine `<select>` in:
+
+```
+src/options/pages/settings/general/general.html
+```
+
+### Step 5 - Update `manifest.json` sandbox (iframe engines only)
+
+Only needed if your engine loads inside an `<iframe>` (like lc0):
+
+```json
+"sandbox": {
+  "pages": [
+    "lib/engine/lc0/lc0.html",
+    "lib/engine/your-engine-name/your-engine.html"
+  ]
+}
+```
+
+### Quick Reference
+
+| What | Where |
+|------|-------|
+| Engine binary files | `lib/engine/your-engine-name/` |
+| Engine key to path mapping | `popup.js` - `engineMap` object |
+| Loading branch | `popup.js` - `initialize_engine()` |
+| Popup dropdown option | `popup.html` - `#engine_select` |
+| Full settings dropdown option | `general.html` - engine `<select>` |
+| Sandbox entry (iframe only) | `manifest.json` - `"sandbox"` |
 
 ---
 
