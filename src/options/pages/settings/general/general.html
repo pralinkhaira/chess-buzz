@@ -1,6 +1,7 @@
 <div class="book-scene">
   <input type="checkbox" id="checkbox1" class="page-checkbox" />
   <input type="checkbox" id="checkbox2" class="page-checkbox" />
+  <input type="checkbox" id="checkbox3" class="page-checkbox" />
 
   <div class="book-wrapper">
     <div class="book-cover">
@@ -13,7 +14,94 @@
             <ul class="toc-list">
               <li><span class="toc-chapter">Chapter 1: Engine</span> <span class="toc-page-num">1</span></li>
               <li><span class="toc-chapter">Chapter 2: Autoplay & UX</span> <span class="toc-page-num">3</span></li>
+              <li><span class="toc-chapter">Chapter 3: Engine Selection Guide</span> <span class="toc-page-num">5</span>
+              </li>
             </ul>
+          </div>
+        </div>
+        <!-- Paper 3 (Bottom) -->
+        <div class="paper" id="p3">
+          <div class="front">
+            <div class="page-content">
+              <h2 class="chapter-title">Engine Guide</h2>
+              <h3 class="chapter-subtitle">Top Engines</h3>
+
+              <div style="font-size: 0.95em; line-height: 1.4; margin-top: 15px;">
+                <h5 class="subsectionTitle" style="margin-bottom: 5px; color: #5c1b1b;"><i class="material-icons"
+                    style="font-size: 16px; vertical-align: middle;">looks_one</i> Stockfish 17 NNUE (79MB)</h5>
+                <p style="margin: 0 0 12px 0; text-indent: 0;"><strong>Best for:</strong> Standard chess, maximum
+                  strength. Recommended default for most users. (Needs 4GB+ RAM)</p>
+
+                <h5 class="subsectionTitle" style="margin-bottom: 5px; color: #5c1b1b;"><i class="material-icons"
+                    style="font-size: 16px; vertical-align: middle;">looks_two</i> Stockfish 16 NNUE (40MB)</h5>
+                <p style="margin: 0 0 12px 0; text-indent: 0;"><strong>Best for:</strong> Slightly older systems, low on
+                  storage.</p>
+
+                <h5 class="subsectionTitle" style="margin-bottom: 5px; color: #5c1b1b;"><i class="material-icons"
+                    style="font-size: 16px; vertical-align: middle;">looks_3</i> Stockfish 16 NNUE (7MB)</h5>
+                <p style="margin: 0 0 12px 0; text-indent: 0;"><strong>Best for:</strong> Very low-end PCs, minimal
+                  storage.</p>
+
+                <h5 class="subsectionTitle" style="margin-bottom: 5px; color: #5c1b1b;"><i class="material-icons"
+                    style="font-size: 16px; vertical-align: middle;">looks_4</i> Leela Chess Zero</h5>
+                <p style="margin: 0 0 12px 0; text-indent: 0;"><strong>Best for:</strong> Human-like analysis. <em>GPU
+                    recommended.</em></p>
+
+                <h5 class="subsectionTitle" style="margin-bottom: 5px; color: #5c1b1b;"><i class="material-icons"
+                    style="font-size: 16px; vertical-align: middle;">looks_5</i> Fairy Stockfish 14</h5>
+                <p style="margin: 0 0 12px 0; text-indent: 0;"><strong>Best for:</strong> Chess variants. Don't use for
+                  standard.</p>
+              </div>
+
+              <div class="page-number">5</div>
+              <label class="turn-btn next-btn" for="checkbox3">Turn Page ➔</label>
+            </div>
+          </div>
+          <div class="back">
+            <div class="page-content">
+              <h2 class="chapter-title">Engine Guide</h2>
+              <h3 class="chapter-subtitle">Other & Summary</h3>
+
+              <div style="font-size: 0.95em; line-height: 1.4; margin-top: 15px;">
+                <h5 class="subsectionTitle" style="margin-bottom: 5px; color: #5c1b1b;"><i class="material-icons"
+                    style="font-size: 16px; vertical-align: middle;">looks_6</i> Stockfish 11 HCE / Stockfish 6</h5>
+                <p style="margin: 0 0 12px 0; text-indent: 0;"><strong>Best for:</strong> Comparison only, weaker
+                  opponent.</p>
+
+                <h5 class="subsectionTitle" style="margin-bottom: 5px; color: #5c1b1b;"><i class="material-icons"
+                    style="font-size: 16px; vertical-align: middle;">looks_7</i> Remote Engine</h5>
+                <p style="margin: 0 0 12px 0; text-indent: 0;"><strong>Best for:</strong> Server-based analysis. No
+                  local CPU usage.</p>
+              </div>
+
+              <h5 class="subsectionTitle"
+                style="text-align: center; border-bottom: 1px dotted #8a6c53; padding-bottom: 5px;">Quick Decision</h5>
+              <table style="width: 100%; font-size: 0.85em; margin-top: 10px; border-collapse: collapse;">
+                <tr style="border-bottom: 1px solid #ccc; text-align: left;">
+                  <th style="padding: 4px 0;">Situation</th>
+                  <th style="padding: 4px 0;">Engine</th>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0d5c1;">
+                  <td style="padding: 4px 0;">Best overall</td>
+                  <td style="padding: 4px 0;"><b>Stockfish 17 (79MB)</b></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0d5c1;">
+                  <td style="padding: 4px 0;">Low-end PC</td>
+                  <td style="padding: 4px 0;"><b>Stockfish 16 (7MB)</b></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0d5c1;">
+                  <td style="padding: 4px 0;">GPU available</td>
+                  <td style="padding: 4px 0;"><b>Leela Chess Zero</b></td>
+                </tr>
+                <tr>
+                  <td style="padding: 4px 0;">Variants</td>
+                  <td style="padding: 4px 0;"><b>Fairy Stockfish</b></td>
+                </tr>
+              </table>
+
+              <div class="page-number">6</div>
+              <label class="turn-btn prev-btn" for="checkbox3">⟵ Turn Back</label>
+            </div>
           </div>
         </div>
 

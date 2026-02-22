@@ -80,6 +80,11 @@
     z-index: 2;
 }
 
+#checkbox3:checked~.book-wrapper .book #p3 {
+    transform: rotateY(-180deg);
+    z-index: 3;
+}
+
 
 .front,
 .back {
