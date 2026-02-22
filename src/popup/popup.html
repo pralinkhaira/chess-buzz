@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Chess Buzz</title>
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="/lib/chessboard/chessboard.min.css">
+    <link rel="stylesheet" href="/lib/materialize/materialize.min.css">
+    <link rel="stylesheet" href="/lib/materialize/material-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+    <script src="/lib/jquery.min.js"></script>
+    <script src="/lib/lru.min.js"></script>
+    <script src="/lib/chessboard/chessboard.min.js"></script>
+    <script src="/lib/materialize/materialize.min.js"></script>
+    <script type="module" src="popup.js"></script>
+</head>
+
+
+<body>
+    <div id="main-content" style="width: 354px; height: 100%; position: absolute; top: 0; left: 0;">
+        <button id="config" class="waves-effect waves-light btn tooltipped" data-position="left"
+            data-tooltip="Settings">
+            <i class="medium material-icons">settings</i>
+        </button>
+        <button id="quick-config" class="waves-effect waves-light btn"
+            style="position: absolute; bottom: 5px; right: 55px;">
+            <i class="medium material-icons">tune</i>
+        </button>
+        <button id="analyze" class="waves-effect waves-light btn tooltipped" data-position="right"
+            data-tooltip="Analysis Board">
+            <i class="medium material-icons">open_in_new</i>
+        </button>
+
+        <div id="move-annotations"></div>
+        <div id="response-annotations"></div>
+
+        <div id="game-detection">Waiting for a game...</div>
+
+        <div id="board"></div>
+
+        <div id="moves">
+            <div id="chess_line_1">No active board detected.<br>Try refreshing the page to connect.</div>
+            <div id="chess_line_2"></div>
+        </div>
+        <div id="evaluation"></div>
+    </div>
+
+    <div id="quick-settings-panel"
+        style="position: absolute; top:0; left:354px; width:200px; height:100%; background-color: var(--bg-color, rgb(240, 240, 240)); z-index: 100; text-align: left; overflow-y: auto; overflow-x: hidden; color: var(--text-color, #666666); border-left: 1px solid var(--border-color, #ccc);">
+        <div style="padding: 15px; padding-bottom: 50px; font-size: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h5 style="margin: 0; font-weight: 500;">Quick Settings</h5>
+                <i class="material-icons" id="close-quick-settings" style="cursor: pointer;">close</i>
+            </div>
+
+            <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                <span>Dark Mode</span>
+                <div class="switch">
+                    <label>
+                        <input id="dark_mode_toggle" type="checkbox">
+                        <span class="lever"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                <span>Auto Play</span>
+                <div class="switch">
+                    <label>
+                        <input id="autoplay_toggle" type="checkbox">
+                        <span class="lever"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                <span class="tooltipped" data-position="bottom"
+                    data-tooltip="Random delays before each move to mimic human timing and avoid detection.">
+                    Human Mode <i class="material-icons"
+                        style="font-size: 14px; vertical-align: middle; cursor: help;">info</i>
+                </span>
+                <div class="switch">
+                    <label>
+                        <input id="human_mode_toggle" type="checkbox">
+                        <span class="lever"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                <span class="tooltipped" data-position="bottom"
+                    data-tooltip="Optimizes for solving chess puzzles as quickly as possible.">
+                    Puzzle Mode <i class="material-icons"
+                        style="font-size: 14px; vertical-align: middle; cursor: help;">info</i>
+                </span>
+                <div class="switch">
+                    <label>
+                        <input id="puzzle_mode_toggle" type="checkbox">
+                        <span class="lever"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label>Engine</label>
+                <select id="engine_select" class="browser-default"
+                    style="display: block; width: 100%; height: 30px; font-size: 12px; margin-top: 5px; background-color: var(--bg-color); color: var(--text-color); border: 1px solid #ccc;">
+                    <option value="stockfish-17-nnue-79">Stockfish 17 NNUE - 79MB</option>
+                    <option value="stockfish-16-nnue-40">Stockfish 16 NNUE - 40MB</option>
+                    <option value="stockfish-16-nnue-7">Stockfish 16 NNUE - 7MB</option>
+                    <option value="stockfish-11-hce">Stockfish 11 HCE</option>
+                    <option value="stockfish-6">Stockfish 6</option>
+                    <option value="lc0">Leela Chess Zero v0.19.1</option>
+                    <option value="fairy-stockfish-14-nnue">Fairy Stockfish 14 NNUE</option>
+                    <option value="remote">Remote Engine</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label>Strength Preset</label>
+                <select id="strength_preset_select" class="browser-default"
+                    style="display: block; width: 100%; height: 30px; font-size: 12px; margin-top: 5px; background-color: var(--bg-color); color: var(--text-color); border: 1px solid #ccc;">
+                    <option value="custom">Custom</option>
+                    <option value="low">Low (Fast)</option>
+                    <option value="medium">Medium</option>
+                    <option value="max">Max (Deep)</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label>Piece Theme</label>
+                <select id="pieces_select" class="browser-default"
+                    style="display: block; width: 100%; height: 30px; font-size: 12px; margin-top: 5px; background-color: var(--bg-color); color: var(--text-color); border: 1px solid #ccc;">
+                    <option value="wikipedia.svg">Wikipedia</option>
+                    <option value="neo.png">Neo</option>
+                    <option value="alpha.png">Alpha</option>
+                    <option value="classic.png">Classic</option>
+                    <option value="vintage.png">Vintage</option>
+                    <option value="book.png">Book</option>
+                    <option value="bases.png">Bases</option>
+                    <option value="staunty.svg">Staunty</option>
+                    <option value="riohacha.svg">Riohacha</option>
+                    <option value="newspaper.png">Newspaper</option>
+                    <option value="wood.png">Wood</option>
+                    <option value="neo-wood.png">Neo-Wood</option>
+                    <option value="8-bit.png">8-Bit</option>
+                    <option value="three-dee.png">Three-Dee</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label>Board Theme</label>
+                <select id="board_select" class="browser-default"
+                    style="display: block; width: 100%; height: 30px; font-size: 12px; margin-top: 5px; background-color: var(--bg-color); color: var(--text-color); border: 1px solid #ccc;">
+                    <option value="brown">Brown</option>
+                    <option value="red">Red</option>
+                    <option value="orange">Orange</option>
+                    <option value="tan">Tan</option>
+                    <option value="green">Green</option>
+                    <option value="sky">Sky</option>
+                    <option value="blue">Blue</option>
+                    <option value="purple">Purple</option>
+                    <option value="grey">Grey</option>
+                    <option value="wood">Wood</option>
+                    <option value="marble">Marble</option>
+                    <option value="newspaper">Newspaper</option>
+                    <option value="_8-bit">8-Bit</option>
+                </select>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

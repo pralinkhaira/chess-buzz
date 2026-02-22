@@ -1,0 +1,145 @@
+<div class="book-scene">
+  <input type="checkbox" id="checkbox1" class="page-checkbox" />
+
+  <div class="book-wrapper">
+    <div class="book-cover">
+      <div class="spine-center"></div>
+      <div id="book" class="book">
+        <!-- TOC Page (Static Left) -->
+        <div class="toc-page">
+          <div class="page-content">
+            <h2 class="chapter-title" style="margin-top: 10px;">Table of Contents</h2>
+            <ul class="toc-list">
+              <li><span class="toc-chapter">Chapter 1: Appearance</span> <span class="toc-page-num">1</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Paper 1 (Only Page) -->
+        <div class="paper" id="p1">
+          <div class="front">
+            <div class="page-content">
+              <h2 class="chapter-title">Appearance</h2>
+              <h3 class="chapter-subtitle">Board and Pieces</h3>
+
+              <div class="section" style="margin-top: 20px">
+                <label>
+                  Pieces:
+                  <select name="pieces" id="pieces_select">
+                    <option value="wikipedia.svg" data-icon="/res/chesspieces/wikipedia/wN.svg">
+                      Wikipedia
+                    </option>
+                    <option value="neo.png" data-icon="/res/chesspieces/neo/wN.png">
+                      Neo
+                    </option>
+                    <option value="alpha.png" data-icon="/res/chesspieces/alpha/wN.png">
+                      Alpha
+                    </option>
+                    <option value="classic.png" data-icon="/res/chesspieces/classic/wN.png">
+                      Classic
+                    </option>
+                    <option value="vintage.png" data-icon="/res/chesspieces/vintage/wN.png">
+                      Vintage
+                    </option>
+                    <option value="book.png" data-icon="/res/chesspieces/book/wN.png">
+                      Book
+                    </option>
+                    <option value="bases.png" data-icon="/res/chesspieces/bases/wN.png">
+                      Bases
+                    </option>
+                    <option value="staunty.svg" data-icon="/res/chesspieces/staunty/wN.svg">
+                      Staunty
+                    </option>
+                    <option value="riohacha.svg" data-icon="/res/chesspieces/riohacha/wN.svg">
+                      Riohacha
+                    </option>
+                    <option value="newspaper.png" data-icon="/res/chesspieces/newspaper/wN.png">
+                      Newspaper
+                    </option>
+                    <option value="wood.png" data-icon="/res/chesspieces/wood/wN.png">
+                      Wood
+                    </option>
+                    <option value="neo-wood.png" data-icon="/res/chesspieces/neo-wood/wN.png">
+                      Neo-Wood
+                    </option>
+                    <option value="8-bit.png" data-icon="/res/chesspieces/8-bit/wN.png">
+                      8-Bit
+                    </option>
+                    <option value="three-dee.png" data-icon="/res/chesspieces/three-dee/wN.png">
+                      Three-Dee
+                    </option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="section">
+                <label>
+                  Board:
+                  <select name="board" id="board_select">
+                    <option value="brown" data-icon="/res/chessboards/previews/brown.png">
+                      Brown
+                    </option>
+                    <option value="red" data-icon="/res/chessboards/previews/red.png">
+                      Red
+                    </option>
+                    <option value="orange" data-icon="/res/chessboards/previews/orange.png">
+                      Orange
+                    </option>
+                    <option value="tan" data-icon="/res/chessboards/previews/tan.png">
+                      Tan
+                    </option>
+                    <option value="green" data-icon="/res/chessboards/previews/green.png">
+                      Green
+                    </option>
+                    <option value="sky" data-icon="/res/chessboards/previews/sky.png">
+                      Sky
+                    </option>
+                    <option value="blue" data-icon="/res/chessboards/previews/blue.png">
+                      Blue
+                    </option>
+                    <option value="purple" data-icon="/res/chessboards/previews/purple.png">
+                      Purple
+                    </option>
+                    <option value="grey" data-icon="/res/chessboards/previews/grey.png">
+                      Grey
+                    </option>
+                    <option value="wood" data-icon="/res/chessboards/previews/wood.png">
+                      Wood
+                    </option>
+                    <option value="marble" data-icon="/res/chessboards/previews/marble.png">
+                      Marble
+                    </option>
+                    <option value="newspaper" data-icon="/res/chessboards/previews/newspaper.png">
+                      Newspaper
+                    </option>
+                    <option value="_8-bit" data-icon="/res/chessboards/previews/8-bit.png">
+                      8-Bit
+                    </option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="section switch" style="margin-top: 30px; margin-bottom: 40px">
+                <label class="switch-label" style="display: block; margin-bottom: 10px">Coordinates:</label>
+                <label>
+                  Off
+                  <input id="coordinates_checkbox" type="checkbox" />
+                  <span class="lever"></span>
+                  On
+                </label>
+              </div>
+
+              <div class="section" style="text-align: center; margin-top: 40px">
+                <button id="reset_btn" class="waves-effect waves-light btn" style="width: 100%">
+                  Restore Defaults
+                </button>
+              </div>
+
+              <div class="page-number">1</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,168 @@
+<div class="book-scene">
+  <input type="checkbox" id="checkbox1" class="page-checkbox" />
+  <input type="checkbox" id="checkbox2" class="page-checkbox" />
+
+  <div class="book-wrapper">
+    <div class="book-cover">
+      <div class="spine-center"></div>
+      <div id="book" class="book">
+        <!-- TOC Page (Static Left) -->
+        <div class="toc-page">
+          <div class="page-content">
+            <h2 class="chapter-title" style="margin-top: 10px;">Table of Contents</h2>
+            <ul class="toc-list">
+              <li><span class="toc-chapter">Chapter 1: Welcome</span> <span class="toc-page-num">1</span></li>
+              <li><span class="toc-chapter">Chapter 2: Directives</span> <span class="toc-page-num">3</span></li>
+              <li><span class="toc-chapter">Chapter 3: External Scripting</span> <span class="toc-page-num">5</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Paper 3 (Bottom) -->
+        <div class="paper" id="p3">
+          <div class="front">
+            <div class="page-content">
+              <h5 class="subsectionTitle">External Scripting</h5>
+              <p>
+                For individuals seeking advanced automation that sidesteps
+                standard browser events, a standalone python integration acts as
+                the conduit. Executing the
+                <a
+                  href="https://github.com/pralinkhaira/chess-buzz/blob/master/src/scripts/chessbuzz-clicker.py">chessbuzz-clicker.py</a>
+                script enables external OS-level cursor targeting.
+              </p>
+              <p class="note-text">
+                <em>Caution:</em> Once enabled, the extension takes direct
+                control of your system mouse.
+              </p>
+
+              <h5 class="subsectionTitle">Rapid Tactics</h5>
+              <p>
+                When speed supersedes absolute precision, activate the
+                tactic-centric mode. It significantly pares down calculation
+                depth to instantly conquer lightning-fast puzzles.
+              </p>
+
+              <br /><br /><br />
+              <div class="center-content">
+                <h3 class="chapter-subtitle" style="margin: 0; opacity: 0.6">
+                  The End.
+                </h3>
+              </div>
+
+              <div class="page-number">5</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paper 2 (Middle) -->
+        <div class="paper" id="p2">
+          <div class="front">
+            <div class="page-content">
+              <h2 class="chapter-title">Directives</h2>
+              <h3 class="chapter-subtitle">Core Configurations</h3>
+              <p class="first-paragraph">
+                Your companion possesses myriad capabilities, each suited for a
+                unique analytical scenario. These toggles exist strictly within
+                the <strong>"Settings / General"</strong> domain.
+              </p>
+
+              <h5 class="subsectionTitle">Ideal Path</h5>
+              <p>
+                By default, the engine illuminates the absolute optimum
+                variation. A primary blue vector denotes the recommended move,
+                while a secondary crimson vector predicts the adversary's finest
+                retaliation.
+              </p>
+
+              <div class="page-number">3</div>
+              <label class="turn-btn next-btn" for="checkbox2">Turn Page ➔</label>
+            </div>
+          </div>
+          <div class="back">
+            <div class="page-content">
+              <h5 class="subsectionTitle">Collaborative Play</h5>
+              <p>
+                An innovative training feature. The logic system designates the
+                piece archetype to be maneuvered, leaving you to decipher the
+                specific, legally sound destination. Perfect for guided
+                intuition building.
+              </p>
+
+              <h5 class="subsectionTitle">Full Automaton</h5>
+              <p>
+                In this state, the extension seizes agency, rendering moves
+                actively onto the digital board via programmed web interactions.
+              </p>
+              <div class="page-number">4</div>
+              <label class="turn-btn prev-btn" for="checkbox2">⟵ Turn Back</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paper 1 (Top) -->
+        <div class="paper" id="p1">
+          <div class="front">
+            <div class="page-content">
+              <h2 class="chapter-title">Welcome</h2>
+              <h3 class="chapter-subtitle">Your First Moves</h3>
+              <p class="first-paragraph">
+                <span class="drop-cap">W</span>elcome to your interactive chess
+                companion. Chess Buzz processes active web-based boards to
+                deliver instantaneous tactical feedback, and when authorized,
+                enacts sequences autonomously. This manual serves as your
+                orientation.
+              </p>
+
+              <h4 class="sectionTitle">Initialization</h4>
+              <p>
+                Summon the interface by interacting with the toolbar icon. The
+                extension immediately scans the visible window for a chessboard
+                and begins evaluation. However, optimal usage implies keeping
+                the interface readily accessible.
+              </p>
+
+              <div class="page-number">1</div>
+              <label class="turn-btn next-btn" for="checkbox1">Turn Page ➔</label>
+            </div>
+          </div>
+          <div class="back">
+            <div class="page-content">
+              <h5 class="subsectionTitle">Docking the Tool</h5>
+              <p>
+                To assure immediate retrieval, affix the icon directly to your
+                application header. Click the <em>puzzle</em> icon adjacent to
+                your URL bar, locate the "Chess Buzz" listing, and select the
+                <em>pin</em> emblem.
+              </p>
+
+              <h5 class="subsectionTitle">Sustaining the Window</h5>
+              <p>
+                By default, extension panels close when focus shifts. To force
+                the interface to remain omnipresent during a session,
+                right-click the pinned emblem and choose
+                <strong>'Inspect Popup'</strong>.
+              </p>
+              <p class="note-text">
+                <em>Observation:</em> This action tethers the panel, keeping it
+                active so long as the developer pane remains unfettered.
+              </p>
+
+              <h5 class="subsectionTitle">Deep Dive</h5>
+              <p>
+                A specialized button resides near the edge of the interface.
+                When struck, it instantly ports the ongoing match setup into a
+                robust Lichess study tab, accommodating extensive theoretical
+                probing.
+              </p>
+
+              <div class="page-number">2</div>
+              <label class="turn-btn prev-btn" for="checkbox1">⟵ Turn Back</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
