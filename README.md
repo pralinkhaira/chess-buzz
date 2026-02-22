@@ -27,7 +27,6 @@ As I worked on it, the scope naturally expanded. What began as small tweaks evol
   <img src="https://raw.githubusercontent.com/pralinkhaira/chess-buzz/refs/heads/main/res/chessbuzz_stack_uppercase.png" align="center" height="500px" />
   <p align="center"><em>Chess Buzz</em></p>
 </p>
----
 
 ### Complete UI Redesign - Modern & Distinctly Polished
 
