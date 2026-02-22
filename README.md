@@ -24,7 +24,7 @@ Chess Buzz started as a personal improvement project inspired by the work of **A
 
 As I worked on it, the scope naturally expanded. What began as small tweaks evolved into a broader effort - redesigning the interface to feel more modern and minimal, optimizing performance in key areas, improving responsiveness, and cleaning up the codebase for long-term maintainability. The improvements listed below are the result of that gradual evolution.
 
-[Chess Buzz Logo](https://raw.githubusercontent.com/pralinkhaira/chess-buzz/refs/heads/main/res/chessbuzz_stack_lowercase.png?token=GHSAT0AAAAAADUC66IGKDWYBRJ43LYNAB542M2VN3Q)
+![Chess Buzz Logo](https://raw.githubusercontent.com/pralinkhaira/chess-buzz/refs/heads/main/res/chessbuzz_stack_lowercase.png?token=GHSAT0AAAAAADUC66IGKDWYBRJ43LYNAB542M2VN3Q)
 ---
 
 ### Complete UI Redesign - Modern & Distinctly Polished
