@@ -1,4 +1,4 @@
-![Chess Buzz Banner]
+![Chess Buzz Banner](https://raw.githubusercontent.com/pralinkhaira/chess-buzz/refs/heads/main/res/chessbuzz_banner_uppercase.png?token=GHSAT0AAAAAADUC66IGWPEWBAZ4DTLWKCLE2M2SVHA)
 
 # Chess Buzz: AI-Powered Chess Assistant
 
