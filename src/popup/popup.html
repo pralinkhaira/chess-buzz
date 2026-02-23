@@ -20,18 +20,20 @@
 
 <body>
     <div id="main-content" style="width: 354px; height: 100%; position: absolute; top: 0; left: 0;">
-        <button id="config" class="waves-effect waves-light btn tooltipped" data-position="left"
-            data-tooltip="Settings">
-            <i class="medium material-icons">settings</i>
-        </button>
-        <button id="quick-config" class="waves-effect waves-light btn tooltipped" data-position="top"
-            data-tooltip="Quick Settings" style="position: absolute; bottom: 5px; right: 55px;">
-            <i class="medium material-icons">tune</i>
-        </button>
-        <button id="analyze" class="waves-effect waves-light btn tooltipped" data-position="right"
-            data-tooltip="Analysis Board">
-            <i class="medium material-icons">open_in_new</i>
-        </button>
+        <div id="action-buttons-container">
+            <button id="analyze" class="waves-effect waves-light btn action-btn">
+                <i class="material-icons">open_in_new</i>
+                <span class="btn-label">Analyze</span>
+            </button>
+            <button id="quick-config" class="waves-effect waves-light btn action-btn">
+                <i class="material-icons">tune</i>
+                <span class="btn-label">Quick<br>Settings</span>
+            </button>
+            <button id="config" class="waves-effect waves-light btn action-btn">
+                <i class="material-icons">settings</i>
+                <span class="btn-label">Settings</span>
+            </button>
+        </div>
 
         <div id="heatmap-annotations"></div>
         <div id="move-annotations"></div>
@@ -63,7 +65,15 @@
             <div id="chess_line_1">No active board detected.<br>Try refreshing the page to connect.</div>
             <div id="chess_line_2"></div>
         </div>
-        <div id="evaluation"></div>
+        <div id="multipv-container">
+            <div id="multipv-header">Principal Variations</div>
+            <div id="pv-line-1" class="pv-line"></div>
+            <div id="pv-line-2" class="pv-line"></div>
+            <div id="pv-line-3" class="pv-line"></div>
+            <div id="pv-line-4" class="pv-line"></div>
+            <a id="developer-watermark" href="https://pralinkhaira.github.io" target="_blank">Designed and developed by
+                Pralin Khaira</a>
+        </div>
     </div>
 
     <div id="quick-settings-panel"

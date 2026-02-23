@@ -13,6 +13,22 @@
 
 ## Update History
 
+### Update V2: 24/02/2026 (Popup Multi-PV Redesign)
+
+**Multi-PV Engine Display**
+
+The popup UI has been completely redesigned to display multiple Principal Variations (PV) simultaneously, giving you deeper insight into the top engine lines instead of just a single move:
+
+- **Ranked Variations**: The popup now computes and cleanly renders the top 4 engine lines stacked vertically.
+- **Deep Move Limits**: Each variation displays exactly 3 full moves (6 plies) ahead.
+- **Color-Coded Evaluations**: Scores are intelligently color-coded based on advantage (Red for Black, Blue for White, Green for Mate bounds).
+- **Responsive Sizing**: The popup automatically scales horizontally to reveal the slide-out Quick Settings panel without overlapping the new horizontal PV listings.
+- **Action Buttons Layout**: The main utility buttons (Analyze, Quick Set, Settings) have been re-stacked vertically on the right side with explicit text labels replacing touch-unfriendly tooltips.
+<p align="center">
+  <img width="695" height="617" alt="image" src="https://github.com/user-attachments/assets/f67c25d6-4179-4ceb-8e1c-f7fed6afbe56" />
+  <p align="center"><em>HeatMap and Arrow Mode</em></p>
+</p>
+
 ### Update V1: 23/02/2026 (Move Heatmap & Settings Polish)
 
 **Move Heatmap & Visualization Modes**

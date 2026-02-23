@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         variant: JSON.parse(localStorage.getItem('variant')) || 'chess',
         compute_time: (computeTime != null) ? computeTime : 3000,
         fen_refresh: (fenRefresh != null) ? fenRefresh : 100,
-        multiple_lines: JSON.parse(localStorage.getItem('multiple_lines')) || 1,
+        multiple_lines: Math.max(4, JSON.parse(localStorage.getItem('multiple_lines')) || 4),
         threads: JSON.parse(localStorage.getItem('threads')) || navigator.hardwareConcurrency - 1,
         memory: JSON.parse(localStorage.getItem('memory')) || 32,
         think_time: (thinkTime != null) ? thinkTime : 1000,
@@ -471,12 +471,7 @@ function on_engine_best_move(best, threat, isTerminal = false) {
 
 function on_engine_evaluation(info) {
     if (!info.lines[0]) return;
-
-    if ('mate' in info.lines[0]) {
-        update_evaluation(`Checkmate in ${info.lines[0].mate}`);
-    } else {
-        update_evaluation(`Score: ${info.lines[0].score / 100.0}<br>Depth: ${info.lines[0].depth}`);
-    }
+    update_multipv_display(info);
 }
 
 function on_engine_response(message) {
@@ -535,6 +530,7 @@ function on_engine_response(message) {
             on_engine_evaluation(last_eval);
         } else {
             last_eval.lines[pvIdx] = lineInfo;
+            on_engine_evaluation(last_eval);
         }
     }
 
@@ -663,9 +659,80 @@ function parse_position_from_response(txt) {
     }
 }
 
+const MULTIPV_DISPLAY_COUNT = 4;
+const PV_MOVES_LIMIT = 6;
+
+function format_pv_score(lineInfo) {
+    if ('mate' in lineInfo) {
+        const mateVal = lineInfo.mate;
+        return { text: `#${mateVal}`, cssClass: 'mate' };
+    } else {
+        const score = lineInfo.score / 100.0;
+        const sign = score > 0 ? '+' : '';
+        let cssClass = 'neutral';
+        if (score > 0.1) cssClass = 'positive';
+        else if (score < -0.1) cssClass = 'negative';
+        return { text: `${sign}${score.toFixed(2)}`, cssClass };
+    }
+}
+
+function format_pv_moves(pvString) {
+    if (!pvString) return '';
+    const moves = pvString.split(' ').slice(0, PV_MOVES_LIMIT);
+    // Format moves as numbered pairs: 1. e2e4 e7e5 2. g1f3 b8c6
+    let formatted = '';
+    for (let i = 0; i < moves.length; i++) {
+        if (i % 2 === 0) {
+            const moveNum = Math.floor(i / 2) + 1;
+            formatted += `${moveNum}.`;
+        }
+        formatted += `${moves[i]} `;
+    }
+    return formatted.trim();
+}
+
+function update_multipv_display(info) {
+    if (!config.computer_evaluation) return;
+
+    for (let i = 0; i < MULTIPV_DISPLAY_COUNT; i++) {
+        const el = document.getElementById(`pv-line-${i + 1}`);
+        if (!el) continue;
+
+        const lineInfo = info.lines[i];
+        if (!lineInfo) {
+            el.innerHTML = '';
+            el.classList.remove('best-line');
+            continue;
+        }
+
+        const { text: scoreText, cssClass: scoreCss } = format_pv_score(lineInfo);
+        const movesText = format_pv_moves(lineInfo.pv);
+
+        el.innerHTML = `<span class="pv-rank">${i + 1}</span>` +
+            `<span class="pv-score ${scoreCss}">${scoreText}</span>` +
+            `<span class="pv-moves">${movesText}</span>`;
+
+        if (i === 0) {
+            el.classList.add('best-line');
+        } else {
+            el.classList.remove('best-line');
+        }
+    }
+}
+
 function update_evaluation(eval_string) {
+    // Legacy function - now handled by update_multipv_display
+    // Still used for terminal states (checkmate/stalemate)
     if (eval_string != null && config.computer_evaluation) {
-        document.getElementById('evaluation').innerHTML = eval_string;
+        const el = document.getElementById('pv-line-1');
+        if (el) {
+            el.innerHTML = `<span style="font-size: 13px; font-weight: 600; color: var(--text-color);">${eval_string}</span>`;
+            el.classList.remove('best-line');
+        }
+        for (let i = 1; i < MULTIPV_DISPLAY_COUNT; i++) {
+            const pvEl = document.getElementById(`pv-line-${i + 1}`);
+            if (pvEl) pvEl.innerHTML = '';
+        }
     }
 }
 
