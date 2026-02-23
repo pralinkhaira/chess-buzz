@@ -1,11 +1,10 @@
-![Chess Buzz Banner](https://raw.githubusercontent.com/pralinkhaira/chess-buzz/refs/heads/main/res/chessbuzz_banner_lowercase.png?token=GHSAT0AAAAAADUC66IHD4PHGJGKJIVXCGFU2M2UQQA)
-
+![Chess Buzz Banner](https://raw.githubusercontent.com/pralinkhaira/chess-buzz/refs/heads/main/res/chessbuzz_banner_uppercase.png)
 # Chess Buzz: AI-Powered Chess Assistant
 
 **Chess Buzz** is a feature-rich browser extension that delivers real-time next-best-move analysis and intelligent autoplay capabilities for **Chess.com** and **Lichess**. Built for players who want powerful engine analysis paired with a polished, modern experience.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/pralinkhaira/chess-buzz/refs/heads/main/res/chess.gif?token=GHSAT0AAAAAADUC66IGDXLPTJPKGNEEYHR62M2UQTQ" align="center" height="500px" />
+  <img src="https://raw.githubusercontent.com/pralinkhaira/chess-buzz/refs/heads/main/res/chess.gif" align="center" height="500px" />
   <p align="center"><em>Chess Buzz defeating Maximum Bot (3200) in real-time</em></p>
 </p>
 
@@ -24,7 +23,10 @@ Chess Buzz started as a personal improvement project inspired by the work of **A
 
 As I worked on it, the scope naturally expanded. What began as small tweaks evolved into a broader effort - redesigning the interface to feel more modern and minimal, optimizing performance in key areas, improving responsiveness, and cleaning up the codebase for long-term maintainability. The improvements listed below are the result of that gradual evolution.
 
----
+<p align="center">
+  <img src="https://raw.githubusercontent.com/pralinkhaira/chess-buzz/refs/heads/main/res/chessbuzz_stack_uppercase.png" align="center" height="500px" />
+  <p align="center"><em>Chess Buzz</em></p>
+</p>
 
 ### Complete UI Redesign - Modern & Distinctly Polished
 
