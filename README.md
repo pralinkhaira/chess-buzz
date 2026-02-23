@@ -3,6 +3,8 @@
 
 **Chess Buzz** is a feature-rich browser extension that delivers real-time next-best-move analysis and intelligent autoplay capabilities for **Chess.com** and **Lichess**. Built for players who want powerful engine analysis paired with a polished, modern experience.
 
+- Use wisely, you getting **banned** using this, sint my headache!
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/pralinkhaira/chess-buzz/refs/heads/main/res/chess.gif" align="center" height="500px" />
   <p align="center"><em>Chess Buzz defeating Maximum Bot (3200) in real-time</em></p>
