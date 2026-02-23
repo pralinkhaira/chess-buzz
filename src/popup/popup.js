@@ -106,7 +106,38 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.getElementById('human_mode_toggle').addEventListener('change', (e) => {
         config.human_mode = e.target.checked;
         localStorage.setItem('human_mode', JSON.stringify(config.human_mode));
-        push_config();
+
+        let needsReload = false;
+
+        if (config.human_mode) {
+            if (!config.autoplay) {
+                config.autoplay = true;
+                document.getElementById('autoplay_toggle').checked = true;
+                localStorage.setItem('autoplay', JSON.stringify(true));
+            }
+
+            if (config.engine !== 'lc0') {
+                config.engine = 'lc0';
+                document.getElementById('engine_select').value = 'lc0';
+                localStorage.setItem('engine', JSON.stringify(config.engine));
+
+                const currPreset = document.getElementById('strength_preset_select').value;
+                if (currPreset !== 'custom') {
+                    document.getElementById('strength_preset_select').value = 'custom';
+                    localStorage.setItem('strength_preset', JSON.stringify('custom'));
+                }
+
+                needsReload = true;
+            }
+        }
+
+        if (needsReload) {
+            localStorage.setItem('quick_settings_open', JSON.stringify(true));
+            push_config();
+            window.location.reload();
+        } else {
+            push_config();
+        }
     });
 
     document.getElementById('board_select').addEventListener('change', (e) => {
@@ -213,6 +244,22 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // initialize materialize
     M.Tooltip.init(document.querySelectorAll('.tooltipped'), {});
+
+    // first time user check
+    const hasSeenWelcome = localStorage.getItem('has_seen_welcome');
+    if (!hasSeenWelcome) {
+        document.getElementById('welcome-tooltip').classList.remove('hidden');
+    }
+
+    document.getElementById('close-welcome').addEventListener('click', () => {
+        document.getElementById('welcome-tooltip').classList.add('hidden');
+        localStorage.setItem('has_seen_welcome', 'true');
+    });
+
+    document.getElementById('config').addEventListener('click', () => {
+        localStorage.setItem('has_seen_welcome', 'true');
+        document.getElementById('welcome-tooltip').classList.add('hidden');
+    });
 });
 
 async function initialize_engine() {

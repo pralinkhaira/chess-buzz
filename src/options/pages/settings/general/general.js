@@ -17,8 +17,18 @@ class GeneralSettings extends SettingsPage {
         this.registerFormElement('computer_evaluation', 'Show Computer Evaluation:', 'checkbox', true);
         this.registerFormElement('threat_analysis', 'Show Threat Analysis', 'checkbox', true);
         this.registerFormElement('simon_says_mode', '"Hand and Brain" Mode:', 'checkbox', false);
-        this.registerFormElement('autoplay', 'Autoplay:', 'checkbox', false);
-        this.registerFormElement('human_mode', 'Human Mode:', 'checkbox', false);
+        const autoplay = this.registerFormElement('autoplay', 'Autoplay:', 'checkbox', false);
+        const human_mode = this.registerFormElement('human_mode', 'Human Mode:', 'checkbox', false);
+        human_mode.registerChangeListener(() => {
+            if (human_mode.getValue()) {
+                if (engine_select.getValue() !== 'lc0') {
+                    engine_select.setValue('lc0');
+                }
+                if (!autoplay.getValue()) {
+                    autoplay.setValue(true);
+                }
+            }
+        });
         this.registerFormElement('puzzle_mode', 'Puzzle Mode:', 'checkbox', false);
         this.registerFormElement('python_autoplay_backend', 'Python Autoplay Backend:', 'checkbox', false);
         this.registerFormElement('think_time', 'Simulated Think Time (ms):', 'input', 1000);

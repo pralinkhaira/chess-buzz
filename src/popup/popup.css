@@ -230,13 +230,43 @@ body.dark-mode {
     margin: 15px 0 0 0;
 }
 
-#game-detection {
+#status-container {
+    position: relative;
     height: 20px;
     margin-top: 4px;
     margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+#github-link {
+    position: absolute;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    opacity: 0.4;
+    transition: opacity 0.2s, color 0.2s;
+}
+
+#github-link:hover {
+    opacity: 0.8;
+    color: #ff4081;
+}
+
+#game-detection {
+    height: 20px;
     font: 14px 'Roboto', sans-serif;
     line-height: 18px;
     text-align: center;
+    white-space: nowrap;
+    color: #444;
+}
+
+body.dark-mode #game-detection {
+    color: #bbb;
 }
 
 #config {
@@ -253,4 +283,71 @@ body.dark-mode {
 
 .material-tooltip {
     top: 429px !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#welcome-tooltip {
+    position: absolute;
+    bottom: 80px;
+    /* Moved higher to avoid covering 'Try refreshing' text */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    background-color: #ffffff;
+    /* Solid white background */
+    border: 2px solid #ff4081;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    z-index: 200;
+    animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        bottom: 60px;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 80px;
+        opacity: 1;
+    }
+}
+
+.welcome-tooltip-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #333333;
+    /* Darker, high-contrast text */
+    white-space: normal;
+    text-align: left;
+}
+
+.close-tooltip {
+    font-size: 16px !important;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    margin-left: auto;
+}
+
+.close-tooltip:hover {
+    opacity: 1;
+}
+
+body.dark-mode #welcome-tooltip {
+    background-color: #1a1a1a;
+    /* Solid solid-dark background */
+    border-color: #ff4081;
+}
+
+body.dark-mode .welcome-tooltip-inner {
+    color: #f0f0f0;
 }
