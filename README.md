@@ -25,7 +25,7 @@ The popup UI has been completely redesigned to display multiple Principal Variat
 - **Responsive Sizing**: The popup automatically scales horizontally to reveal the slide-out Quick Settings panel without overlapping the new horizontal PV listings.
 - **Action Buttons Layout**: The main utility buttons (Analyze, Quick Set, Settings) have been re-stacked vertically on the right side with explicit text labels replacing touch-unfriendly tooltips.
 <p align="center">
-  <img width="695" height="617" alt="image" src="https://github.com/user-attachments/assets/f67c25d6-4179-4ceb-8e1c-f7fed6afbe56" />
+  <img width="1407" height="586" alt="image" src="https://github.com/user-attachments/assets/428f7c9a-b4dd-42ea-84e5-a468f9b0c3bf" />
   <p align="center"><em>HeatMap and Arrow Mode</em></p>
 </p>
 
