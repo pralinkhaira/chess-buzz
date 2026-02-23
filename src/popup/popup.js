@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         human_mode: JSON.parse(localStorage.getItem('human_mode')) || false,
         puzzle_mode: JSON.parse(localStorage.getItem('puzzle_mode')) || false,
         python_autoplay_backend: JSON.parse(localStorage.getItem('python_autoplay_backend')) || false,
+        move_display: JSON.parse(localStorage.getItem('move_display')) || 'arrows',
         // appearance settings
         pieces: JSON.parse(localStorage.getItem('pieces')) || 'wikipedia.svg',
         board: JSON.parse(localStorage.getItem('board')) || 'brown',
@@ -100,6 +101,18 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.getElementById('puzzle_mode_toggle').addEventListener('change', (e) => {
         config.puzzle_mode = e.target.checked;
         localStorage.setItem('puzzle_mode', JSON.stringify(config.puzzle_mode));
+        push_config();
+    });
+
+    document.getElementById('move_display_select').value = config.move_display;
+    document.getElementById('move_display_select').addEventListener('change', (e) => {
+        config.move_display = e.target.value;
+        localStorage.setItem('move_display', JSON.stringify(config.move_display));
+        clear_annotations();
+        if (!config.simon_says_mode) {
+            draw_moves();
+            if (config.threat_analysis) draw_threat();
+        }
         push_config();
     });
 
@@ -738,12 +751,22 @@ function draw_moves() {
     }
 
     clear_annotations();
-    for (let i = 0; i < last_eval.activeLines; i++) {
-        if (!last_eval.lines[i]) continue;
 
-        const arrow_color = (i === 0) ? '#004db8' : '#4a4a4a';
-        const stroke_width = strokeFunc(last_eval.lines[i]);
-        draw_move(last_eval.lines[i].move, arrow_color, document.getElementById('move-annotations'), stroke_width);
+    const showArrows = config.move_display === 'arrows' || config.move_display === 'both';
+    const showHeatmap = config.move_display === 'heatmap' || config.move_display === 'both';
+
+    if (showArrows) {
+        for (let i = 0; i < last_eval.activeLines; i++) {
+            if (!last_eval.lines[i]) continue;
+
+            const arrow_color = (i === 0) ? '#004db8' : '#4a4a4a';
+            const stroke_width = strokeFunc(last_eval.lines[i]);
+            draw_move(last_eval.lines[i].move, arrow_color, document.getElementById('move-annotations'), stroke_width);
+        }
+    }
+
+    if (showHeatmap) {
+        draw_heatmap();
     }
 }
 
@@ -751,6 +774,101 @@ function draw_threat() {
     if (last_eval.threat) {
         draw_move(last_eval.threat, '#bf0000', document.getElementById('response-annotations'));
     }
+}
+
+function draw_heatmap() {
+    if (last_eval.lines[0] == null) return;
+
+    const overlay = document.getElementById('heatmap-annotations');
+    const top_line = last_eval.lines[0];
+    const top_score_raw = ('mate' in top_line) ? null : (turn === 'w' ? 1 : -1) * top_line.score / 100;
+
+    // Collect heatmap data for each evaluated line
+    const squares = [];
+
+    for (let i = 0; i < last_eval.activeLines; i++) {
+        const line = last_eval.lines[i];
+        if (!line || !line.move || line.move === '(none)') continue;
+
+        // Determine destination square
+        const move = line.move;
+        let destSquare;
+        if (move.includes('@')) {
+            destSquare = move.substring(2, 4);
+        } else {
+            destSquare = move.substring(2, 4);
+        }
+
+        // Calculate the quality of this move relative to the best
+        let quality; // 'good', 'okay', 'blunder'
+
+        if (i === 0) {
+            quality = 'good'; // best move is always good
+        } else {
+            const isMate = 'mate' in line;
+            const score = isMate ? null : (turn === 'w' ? 1 : -1) * line.score / 100;
+
+            if (isMate && line.mate > 0) {
+                // We deliver checkmate: good
+                quality = 'good';
+            } else if (isMate && line.mate <= 0) {
+                // We get checkmated: blunder
+                quality = 'blunder';
+            } else if (top_score_raw === null) {
+                // Best move is a forced mate for us
+                if (score === null) {
+                    quality = 'good';
+                } else {
+                    // Any non-mate move when mate is available is a blunder
+                    quality = 'blunder';
+                }
+            } else {
+                const cpLoss = top_score_raw - score;
+                if (cpLoss <= 0.5) {
+                    quality = 'good';
+                } else if (cpLoss <= 2.0) {
+                    quality = 'okay';
+                } else {
+                    quality = 'blunder';
+                }
+            }
+        }
+
+        squares.push({ square: destSquare, quality });
+    }
+
+    if (squares.length === 0) return;
+
+    // Map quality to colors
+    const colorMap = {
+        'good': 'rgba(76, 175, 80, 0.45)',   // green
+        'okay': 'rgba(255, 193, 7, 0.45)',    // yellow/amber
+        'blunder': 'rgba(244, 67, 54, 0.45)',    // red
+    };
+
+    // Build SVG for heatmap squares
+    let svgContent = '';
+    for (const { square, quality } of squares) {
+        const fileIdx = square[0].charCodeAt(0) - 'a'.charCodeAt(0);
+        const rankIdx = parseInt(square[1]) - 1;
+
+        let x, y;
+        if (board.orientation() === 'white') {
+            x = fileIdx;
+            y = 7 - rankIdx;
+        } else {
+            x = 7 - fileIdx;
+            y = rankIdx;
+        }
+
+        svgContent += `<rect x="${x}" y="${y}" width="1" height="1" fill="${colorMap[quality]}" />`;
+    }
+
+    overlay.innerHTML = `
+        <svg style="position: absolute; z-index: -1; left: 0; top: 0;" width="344px" height="344px" viewBox="0, 0, 8, 8">
+            ${svgContent}
+        </svg>
+    `;
 }
 
 function draw_move(move, color, overlay, stroke_width = 0.225) {
@@ -845,6 +963,10 @@ function clear_annotations() {
     let response_annotation = document.getElementById('response-annotations');
     while (response_annotation.childElementCount) {
         response_annotation.lastElementChild.remove();
+    }
+    let heatmap_annotation = document.getElementById('heatmap-annotations');
+    while (heatmap_annotation.childElementCount) {
+        heatmap_annotation.lastElementChild.remove();
     }
 }
 

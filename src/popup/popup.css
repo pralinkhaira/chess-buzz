@@ -214,6 +214,16 @@ body.dark-mode {
     height: 344px;
 }
 
+#heatmap-annotations {
+    position: absolute;
+    z-index: 49;
+    top: 26px;
+    left: 5px;
+    width: 344px;
+    height: 344px;
+    pointer-events: none;
+}
+
 #moves {
     height: 45px;
     font: 16px 'Roboto', sans-serif;

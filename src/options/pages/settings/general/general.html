@@ -26,7 +26,7 @@
               <h2 class="chapter-title">Engine Guide</h2>
               <h3 class="chapter-subtitle">Top Engines</h3>
 
-              <div style="font-size: 0.95em; line-height: 1.4; margin-top: 15px;">
+              <div style="margin-top: 10px;">
                 <h5 class="subsectionTitle" style="margin-bottom: 5px; color: #5c1b1b;"><i class="material-icons"
                     style="font-size: 16px; vertical-align: middle;">looks_one</i> Stockfish 17 NNUE (79MB)</h5>
                 <p style="margin: 0 0 12px 0; text-indent: 0;"><strong>Best for:</strong> Standard chess, maximum
@@ -62,7 +62,7 @@
               <h2 class="chapter-title">Engine Guide</h2>
               <h3 class="chapter-subtitle">Other & Summary</h3>
 
-              <div style="font-size: 0.95em; line-height: 1.4; margin-top: 15px;">
+              <div style="margin-top: 10px;">
                 <h5 class="subsectionTitle" style="margin-bottom: 5px; color: #5c1b1b;"><i class="material-icons"
                     style="font-size: 16px; vertical-align: middle;">looks_6</i> Stockfish 11 HCE / Stockfish 6</h5>
                 <p style="margin: 0 0 12px 0; text-indent: 0;"><strong>Best for:</strong> Comparison only, weaker
@@ -129,6 +129,17 @@
                   <input id="threat_analysis_checkbox" type="checkbox" />
                   <span class="lever"></span>
                   On
+                </label>
+              </div>
+
+              <div class="section">
+                <label>
+                  Move Display
+                  <select name="move_display" id="move_display_select">
+                    <option value="arrows">Arrows</option>
+                    <option value="heatmap">Heatmap</option>
+                    <option value="both">Both</option>
+                  </select>
                 </label>
               </div>
 
@@ -229,7 +240,7 @@
                 </label>
               </div>
 
-              <div class="section" style="text-align: center; margin-top: 40px">
+              <div class="section" style="text-align: center; margin-top: 20px">
                 <button id="reset_btn" class="waves-effect waves-light btn" style="width: 100%">
                   Restore Defaults
                 </button>
@@ -248,7 +259,7 @@
               <h2 class="chapter-title">Engine</h2>
               <h3 class="chapter-subtitle">Basics</h3>
 
-              <div class="section" style="margin-top: 20px">
+              <div class="section">
                 <label>
                   <span id="engine-label-tooltiped" class="hidden tooltipped" data-position="right"
                     data-tooltip="Chess Buzz communicates with a chess engine running locally.">
@@ -301,7 +312,7 @@
               </div>
 
               <div
-                style="text-align: center; margin: 15px 0 5px 0; color: #59473b; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; font-weight: bold;">
+                style="text-align: center; margin: 10px 0 5px 0; color: #59473b; font-style: italic; font-size: 1rem; font-weight: bold;">
                 — OR —
               </div>
 
@@ -317,7 +328,7 @@
                 </label>
               </div>
 
-              <div style="margin-top: 25px; font-size: 1.05em; line-height: 1.45;">
+              <div style="margin-top: 15px;">
                 <h5 class="subsectionTitle" style="margin-bottom: 8px;">Which preset to choose?</h5>
                 <p style="margin: 0 0 8px 0; text-indent: 0;"><strong><u><b>Low</b></u>:</strong> Lightweight & fast.
                   <em>(Small Engine, 1 Thread, 32MB Memory)</em>
@@ -352,7 +363,7 @@
                 <label>
                   Multiple Lines (<span class="value" id="multiple_lines_val"></span>)
                   <p class="range-field">
-                    <input id="multiple_lines_range" type="range" min="1" max="5" step="1" />
+                    <input id="multiple_lines_range" type="range" min="1" max="20" step="1" />
                   </p>
                 </label>
               </div>

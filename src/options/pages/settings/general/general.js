@@ -16,6 +16,7 @@ class GeneralSettings extends SettingsPage {
         const memory_range = this.registerFormElement('memory', 'Memory:', 'range', 32);
         this.registerFormElement('computer_evaluation', 'Show Computer Evaluation:', 'checkbox', true);
         this.registerFormElement('threat_analysis', 'Show Threat Analysis', 'checkbox', true);
+        this.registerFormElement('move_display', 'Move Display:', 'select', 'arrows');
         this.registerFormElement('simon_says_mode', '"Hand and Brain" Mode:', 'checkbox', false);
         const autoplay = this.registerFormElement('autoplay', 'Autoplay:', 'checkbox', false);
         const human_mode = this.registerFormElement('human_mode', 'Human Mode:', 'checkbox', false);

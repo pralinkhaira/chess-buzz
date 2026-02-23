@@ -4,14 +4,38 @@
 **Chess Buzz** is a feature-rich browser extension that delivers real-time next-best-move analysis and intelligent autoplay capabilities for **Chess.com** and **Lichess**. Built for players who want powerful engine analysis paired with a polished, modern experience.
 
 - Use wisely, you getting **banned** using this, isn't my headache!
-- Use Leels Chess Zero, it replicates human like moves 
+- Use Leels Chess Zero, it replicates human like moves.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/pralinkhaira/chess-buzz/refs/heads/main/res/chess.gif" align="center" height="500px" />
   <p align="center"><em>Chess Buzz defeating Maximum Bot (3200) in real-time</em></p>
 </p>
 
----
+## Update History
+
+### Update V1 — 23/02/2026 — Move Heatmap & Settings Polish
+
+**Move Heatmap & Visualization Modes**
+
+A powerful new way to visualize engine analysis directly on the board:
+
+- **Move Heatmap**: Highlights destination squares in **Green** (best/good — ≤0.5 pawn loss), **Yellow** (okay — 0.5–2.0 pawn loss), and **Red** (blunder — >2.0 pawn loss) based on engine evaluation.
+- **Three Visualization Modes**:
+  - **Arrows** — Classic directional arrows for the best lines.
+  - **Heatmap** — Clean board overview showing the relative quality of each evaluated move.
+  - **Both** — Heatmap squares rendered underneath arrows for maximum clarity.
+- **Toggle Anywhere**: Switch visualization modes from either the **Quick Settings** panel (popup) or the **General Settings** page (book UI).
+- **Responsive Analysis**: The heatmap updates dynamically as the engine calculates deeper depths.
+
+> **Tip:** Set **Multiple Lines** to 3–5+ in Engine Advanced settings for the heatmap to show a meaningful spread of green, yellow, and red squares.
+
+**Settings Page Polish**
+
+- **Unified typography**: All book-page content now uses a consistent `Crimson Pro` body font with `Playfair Display` reserved for headings and titles only.
+- **Equal spacing**: All form sections (toggles, dropdowns, inputs, sliders) now have uniform 12px vertical gaps instead of the previous mix of 2px–40px.
+- **Compact form elements**: Inputs, selects, range sliders, and buttons are constrained to 280px max-width so they no longer stretch edge-to-edge.
+- **Tidier toggle rows**: Switch sections use flexbox for clean label-to-toggle alignment.
+- **Cleaned up inline overrides**: Removed ad-hoc font-size, line-height, and margin inline styles from HTML in favour of the shared CSS system.
 
 ## What's New - Major Improvements
 

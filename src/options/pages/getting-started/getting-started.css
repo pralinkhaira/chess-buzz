@@ -289,26 +289,59 @@
     text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
 }
 
-.page-content label:not(.switch label) {
+/* ── Unified font for all page content ── */
+.page-content,
+.page-content *:not(.material-icons) {
+    font-family: 'Crimson Pro', serif !important;
+}
+
+.page-content .chapter-title,
+.page-content .chapter-subtitle,
+.page-content .sectionTitle,
+.page-content .subsectionTitle,
+.page-content .turn-btn,
+.page-content .page-number,
+.page-content .toc-chapter,
+.page-content .toc-page-num {
+    font-family: 'Playfair Display', serif !important;
+}
+
+/* ── Consistent section spacing ── */
+.page-content .section {
+    margin-bottom: 12px !important;
+    padding: 0 !important;
+}
+
+.page-content .section:last-of-type {
+    margin-bottom: 0 !important;
+}
+
+/* ── Labels ── */
+.page-content label:not(.switch label):not(.turn-btn) {
     color: #3b2d24 !important;
     font-weight: 600;
     display: block !important;
     text-align: left !important;
     width: 100% !important;
-    font-size: 1.05rem !important;
+    max-width: 280px !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 0 !important;
 }
 
+/* ── Text inputs ── */
 .page-content input[type=number]:not(.browser-default),
 .page-content input[type=text]:not(.browser-default) {
     color: #2b231d !important;
     border-bottom: 1px solid #8a6c53 !important;
-    height: 1.5rem !important;
-    /* Reduce height to stop overflow */
-    margin: 0 !important;
+    height: 1.6rem !important;
+    margin: 2px 0 0 0 !important;
     display: block !important;
     width: 100% !important;
+    max-width: 280px !important;
     text-align: left !important;
     box-sizing: border-box !important;
+    font-size: 0.9rem !important;
 }
 
 .page-content input[type=number]:not(.browser-default):focus,
@@ -317,12 +350,17 @@
     box-shadow: 0 1px 0 0 #5c1b1b !important;
 }
 
+/* ── Select dropdowns ── */
+.page-content .select-wrapper {
+    max-width: 280px !important;
+}
+
 .page-content .select-wrapper input.select-dropdown {
     color: #2b231d !important;
     border-bottom: 1px solid #8a6c53 !important;
-    height: 1.5rem !important;
-    margin: 0 !important;
-    font-size: 14px !important;
+    height: 1.6rem !important;
+    margin: 2px 0 0 0 !important;
+    font-size: 0.9rem !important;
     text-align: left !important;
     display: block !important;
     width: 100% !important;
@@ -334,18 +372,31 @@
     fill: #2b231d !important;
 }
 
+/* ── Switches (toggles) ── */
+.page-content .section.switch {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    max-width: 280px !important;
+}
+
 .page-content .switch-label {
     color: #3b2d24 !important;
     font-weight: 600;
-    margin-bottom: 2px !important;
-    font-size: 1.05rem !important;
+    margin-bottom: 0 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    flex-shrink: 0;
 }
 
 .page-content .switch label {
     color: #634f40 !important;
-    display: inline-block !important;
+    display: inline-flex !important;
+    align-items: center !important;
     width: auto !important;
     text-align: left !important;
+    font-size: 0.85rem !important;
+    white-space: nowrap;
 }
 
 .page-content .switch label input[type=checkbox]:checked+.lever {
@@ -359,7 +410,7 @@
 
 .page-content .switch label .lever {
     background-color: rgba(60, 40, 25, 0.2);
-    margin: 0 10px;
+    margin: 0 8px;
 }
 
 .page-content .switch label .lever:after {
@@ -367,33 +418,15 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.page-content .section {
-    margin-bottom: 2px !important;
-    /* Keep sections compact inside the book */
-    padding: 0 !important;
-}
-
+/* ── Range sliders ── */
 .page-content .range-field {
-    margin-top: 0 !important;
+    margin-top: 2px !important;
     margin-bottom: 0 !important;
+    max-width: 280px !important;
 }
 
-.page-content .btn {
-    background: #5c1b1b !important;
-    color: white !important;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) !important;
-}
-
-.page-content .btn:hover {
-    background: #7a2323 !important;
-}
-
-.page-content .value {
-    color: #5c1b1b !important;
-}
-
-.page-content .info-tooltip {
-    color: #5c1b1b !important;
+.page-content input[type=range] {
+    max-width: 280px !important;
 }
 
 .page-content input[type=range]::-webkit-slider-runnable-track {
@@ -403,6 +436,51 @@
 .page-content input[type=range]::-webkit-slider-thumb {
     background-color: #5c1b1b !important;
     box-shadow: 0 0 5px rgba(92, 27, 27, 0.5) !important;
+}
+
+/* ── Buttons ── */
+.page-content .btn {
+    background: #5c1b1b !important;
+    color: white !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) !important;
+    max-width: 280px !important;
+    font-size: 0.9rem !important;
+}
+
+.page-content .btn:hover {
+    background: #7a2323 !important;
+}
+
+/* ── Accent values & tooltips ── */
+.page-content .value {
+    color: #5c1b1b !important;
+}
+
+.page-content .info-tooltip {
+    color: #5c1b1b !important;
+    font-size: 14px !important;
+    vertical-align: middle;
+}
+
+/* ── Tables ── */
+.page-content table {
+    font-size: 0.9rem !important;
+}
+
+.page-content table th,
+.page-content table td {
+    padding: 5px 0 !important;
+}
+
+/* ── Paragraphs & body text ── */
+.page-content p {
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+}
+
+.page-content h5.subsectionTitle {
+    font-size: 1rem !important;
+    margin: 6px 0 4px 0 !important;
 }
 
 @media (max-width: 1100px) {
