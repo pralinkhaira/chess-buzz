@@ -13,7 +13,7 @@
 
 ## Update History
 
-### Update V1 — 23/02/2026 — Move Heatmap & Settings Polish
+### Update V1: 23/02/2026 (Move Heatmap & Settings Polish)
 
 **Move Heatmap & Visualization Modes**
 
@@ -28,6 +28,11 @@ A powerful new way to visualize engine analysis directly on the board:
 - **Responsive Analysis**: The heatmap updates dynamically as the engine calculates deeper depths.
 
 > **Tip:** Set **Multiple Lines** to 3–5+ in Engine Advanced settings for the heatmap to show a meaningful spread of green, yellow, and red squares.
+<p align="center">
+  <img width="695" height="617" alt="image" src="https://github.com/user-attachments/assets/f67c25d6-4179-4ceb-8e1c-f7fed6afbe56" />
+  <p align="center"><em>HeatMap and Arrow Mode</em></p>
+</p>
+
 
 **Settings Page Polish**
 
