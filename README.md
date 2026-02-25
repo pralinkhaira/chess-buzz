@@ -33,6 +33,14 @@ A new **eye icon** (👁) in the status bar lets you collapse the popup to a tin
 - **Smooth transition**: Height and width animate with a 0.3s ease-in-out.
 - **One-click expand**: Click the eye icon again to restore the full popup.
 
+<p align="center">
+<img width="451" height="56" alt="image" src="https://github.com/user-attachments/assets/6bc58ae9-2b2c-45a7-8046-29d593278b9c" />
+</p>
+<p align="center">
+<img width="61" height="107" alt="image" src="https://github.com/user-attachments/assets/cc73e07a-d5f0-4957-b074-3778d51e0020" />
+</p>
+
+
 **Live Settings Sync**
 
 Settings changed in the popup are now **instantly reflected** in the General Settings page (and vice versa) using the `storage` event API. No more stale toggles when switching between views.
@@ -40,6 +48,10 @@ Settings changed in the popup are now **instantly reflected** in the General Set
 **Smart Checkmate Tracker**
 
 - A new "Checkmate in X" indicator explicitly appears at the bottom of the popup only when a forced mate sequence is 10 moves or fewer away, helping you easily spot winning variations.
+
+<p align="center">
+<img width="412" height="98" alt="image" src="https://github.com/user-attachments/assets/012ee129-9e5d-4c57-b5c0-ba1a2020dd3b" />
+</p>
 
 **Book UI Polish**
 
