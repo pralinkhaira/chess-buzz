@@ -12,7 +12,11 @@ export class FormElement {
         this.type = type;
         this.default = defaultValue;
         this.valueType = typeof defaultValue;
-        this.elem = document.getElementById(`${name}_${type}`);
+        if (this.type === 'radio') {
+            this.elem = document.querySelectorAll(`input[name="${name}"]`);
+        } else {
+            this.elem = document.getElementById(`${name}_${type}`);
+        }
     }
 
     registerChangeListener(fn) {
@@ -22,6 +26,8 @@ export class FormElement {
             this.elem.addEventListener('change', fn);
         } else if (this.type === 'select') {
             this.elem.addEventListener('change', fn);
+        } else if (this.type === 'radio') {
+            this.elem.forEach(radio => radio.addEventListener('change', fn));
         }
     }
 
@@ -32,6 +38,9 @@ export class FormElement {
             return this.elem.checked;
         } else if (this.type === 'select') {
             return this.elem.value;
+        } else if (this.type === 'radio') {
+            const checked = Array.from(this.elem).find(r => r.checked);
+            return checked ? checked.value : this.default;
         }
     }
 
@@ -47,6 +56,10 @@ export class FormElement {
             this.elem.parentElement.querySelector('input').value =
                 this.elem.querySelector(`option[value="${val}"]`).innerText;
             this.elem.dispatchEvent(new Event('change'));
+        } else if (this.type === 'radio') {
+            this.elem.forEach(radio => {
+                radio.checked = (radio.value === val);
+            });
         }
     }
 }

@@ -21,6 +21,15 @@ export class SettingsPage {
 
         this.init();
         this.pullConfigValues();
+
+        // Live-sync: when the popup (or another tab) changes localStorage,
+        // automatically update the settings page to stay in sync.
+        window.addEventListener('storage', (e) => {
+            const match = this.formElements.find(fe => fe.name === e.key);
+            if (match && e.newValue !== null) {
+                match.setValue(JSON.parse(e.newValue));
+            }
+        });
     }
 
     clearConfigValues() {

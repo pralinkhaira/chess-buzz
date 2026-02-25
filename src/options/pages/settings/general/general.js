@@ -31,6 +31,9 @@ class GeneralSettings extends SettingsPage {
             }
         });
         this.registerFormElement('puzzle_mode', 'Puzzle Mode:', 'checkbox', false);
+        this.registerFormElement('voice_narration', 'Voice Narration:', 'checkbox', false);
+        this.registerFormElement('voice_gender', 'Voice Gender:', 'radio', 'male');
+        this.registerFormElement('narrate_eval', 'Narrate Evaluation:', 'checkbox', false);
         this.registerFormElement('python_autoplay_backend', 'Python Autoplay Backend:', 'checkbox', false);
         this.registerFormElement('think_time', 'Simulated Think Time (ms):', 'input', 1000);
         this.registerFormElement('think_variance', 'Simulated Think Variance (ms):', 'input', 500);

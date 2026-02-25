@@ -49,6 +49,7 @@
                 </svg>
             </a>
             <div id="game-detection">Waiting for a game...</div>
+            <i class="material-icons" id="collapse-toggle" title="Minimize popup">visibility</i>
         </div>
 
         <div id="board"></div>
@@ -71,6 +72,9 @@
             <div id="pv-line-2" class="pv-line"></div>
             <div id="pv-line-3" class="pv-line"></div>
             <div id="pv-line-4" class="pv-line"></div>
+            <div id="mate-status"
+                style="text-align: center; color: var(--text-color); font-size: 13px; font-weight: bold; margin-bottom: 2px; margin-top: 4px; display: none;">
+            </div>
             <a id="developer-watermark" href="https://pralinkhaira.github.io" target="_blank">Designed and developed by
                 Pralin Khaira</a>
         </div>
@@ -130,6 +134,29 @@
                         <span class="lever"></span>
                     </label>
                 </div>
+            </div>
+
+            <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                <span class="tooltipped" data-position="bottom"
+                    data-tooltip="Narrates the best move and evaluation aloud using text-to-speech.">
+                    Voice Narration <i class="material-icons"
+                        style="font-size: 14px; vertical-align: middle; cursor: help;">info</i>
+                </span>
+                <div class="switch">
+                    <label>
+                        <input id="voice_narration_toggle" type="checkbox">
+                        <span class="lever"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label>Voice Gender</label>
+                <select id="voice_gender_select" class="browser-default"
+                    style="display: block; width: 100%; height: 30px; font-size: 12px; margin-top: 5px; background-color: var(--bg-color); color: var(--text-color); border: 1px solid #ccc;">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
             </div>
 
             <div style="margin-bottom: 15px;">

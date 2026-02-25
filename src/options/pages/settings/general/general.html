@@ -195,6 +195,44 @@
 
               <div class="section switch">
                 <label class="switch-label tooltipped" data-position="right"
+                  data-tooltip="Narrates the best move and evaluation aloud using text-to-speech.">
+                  Voice Narration <i class="material-icons info-tooltip">info</i>
+                </label>
+                <label>
+                  Off
+                  <input id="voice_narration_checkbox" type="checkbox" />
+                  <span class="lever"></span>
+                  On
+                </label>
+              </div>
+
+              <div class="section" style="display: flex; align-items: center; gap: 12px;">
+                <span style="font-weight: 500;">Voice Gender</span>
+                <label style="display: inline-flex; align-items: center; gap: 4px; cursor: pointer;">
+                  <input name="voice_gender" type="radio" value="male" checked />
+                  <span>Male</span>
+                </label>
+                <label style="display: inline-flex; align-items: center; gap: 4px; cursor: pointer;">
+                  <input name="voice_gender" type="radio" value="female" />
+                  <span>Female</span>
+                </label>
+              </div>
+
+              <div class="section switch">
+                <label class="switch-label tooltipped" data-position="right"
+                  data-tooltip="Include the engine evaluation score in voice narration.">
+                  Narrate Evaluation <i class="material-icons info-tooltip">info</i>
+                </label>
+                <label>
+                  Off
+                  <input id="narrate_eval_checkbox" type="checkbox" />
+                  <span class="lever"></span>
+                  On
+                </label>
+              </div>
+
+              <div class="section switch">
+                <label class="switch-label tooltipped" data-position="right"
                   data-tooltip="Chess Buzz takes control of the mouse pointer. chessbuzz-clicker.py must be running.">
                   Python Backend <i class="material-icons info-tooltip">info</i>
                 </label>

@@ -8,6 +8,16 @@ let config;
 let is_calculating = false;
 let prog = 0;
 let last_eval = { fen: '', activeLines: 0, lines: [] };
+let cachedVoices = [];
+
+// Pre-load speech synthesis voices (they load asynchronously in Chrome)
+if ('speechSynthesis' in window) {
+    cachedVoices = window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => {
+        cachedVoices = window.speechSynthesis.getVoices();
+        console.log('Voices loaded:', cachedVoices.length);
+    };
+}
 let turn = ''; // 'w' | 'b'
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -38,6 +48,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         human_mode: JSON.parse(localStorage.getItem('human_mode')) || false,
         puzzle_mode: JSON.parse(localStorage.getItem('puzzle_mode')) || false,
         python_autoplay_backend: JSON.parse(localStorage.getItem('python_autoplay_backend')) || false,
+        voice_narration: JSON.parse(localStorage.getItem('voice_narration')) || false,
+        voice_gender: JSON.parse(localStorage.getItem('voice_gender')) || 'male',
+        narrate_eval: JSON.parse(localStorage.getItem('narrate_eval')) || false,
         move_display: JSON.parse(localStorage.getItem('move_display')) || 'arrows',
         // appearance settings
         pieces: JSON.parse(localStorage.getItem('pieces')) || 'wikipedia.svg',
@@ -68,6 +81,15 @@ document.addEventListener('DOMContentLoaded', async function () {
         localStorage.removeItem('quick_settings_open');
     }
 
+    // restore collapsed state
+    const collapseToggle = document.getElementById('collapse-toggle');
+    if (JSON.parse(localStorage.getItem('popup_collapsed'))) {
+        document.body.classList.add('popup-collapsed');
+        document.documentElement.classList.add('popup-collapsed');
+        collapseToggle.textContent = 'visibility_off';
+        collapseToggle.title = 'Expand popup';
+    }
+
     document.getElementById('quick-config').addEventListener('click', () => {
         document.body.classList.toggle('quick-settings-open');
         document.documentElement.classList.toggle('quick-settings-open');
@@ -77,9 +99,26 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.documentElement.classList.remove('quick-settings-open');
     });
 
+    // collapse/expand toggle
+    collapseToggle.addEventListener('click', () => {
+        const isCollapsed = document.body.classList.toggle('popup-collapsed');
+        document.documentElement.classList.toggle('popup-collapsed');
+        collapseToggle.textContent = isCollapsed ? 'visibility_off' : 'visibility';
+        collapseToggle.title = isCollapsed ? 'Expand popup' : 'Minimize popup';
+        localStorage.setItem('popup_collapsed', JSON.stringify(isCollapsed));
+
+        // close quick settings when collapsing
+        if (isCollapsed) {
+            document.body.classList.remove('quick-settings-open');
+            document.documentElement.classList.remove('quick-settings-open');
+        }
+    });
+
     document.getElementById('dark_mode_toggle').checked = isDarkMode;
     document.getElementById('autoplay_toggle').checked = config.autoplay;
     document.getElementById('human_mode_toggle').checked = config.human_mode;
+    document.getElementById('voice_narration_toggle').checked = config.voice_narration;
+    document.getElementById('voice_gender_select').value = config.voice_gender;
     document.getElementById('puzzle_mode_toggle').checked = config.puzzle_mode;
     document.getElementById('engine_select').value = config.engine;
     document.getElementById('pieces_select').value = config.pieces;
@@ -102,6 +141,25 @@ document.addEventListener('DOMContentLoaded', async function () {
         config.puzzle_mode = e.target.checked;
         localStorage.setItem('puzzle_mode', JSON.stringify(config.puzzle_mode));
         push_config();
+    });
+
+    document.getElementById('voice_narration_toggle').addEventListener('change', (e) => {
+        config.voice_narration = e.target.checked;
+        localStorage.setItem('voice_narration', JSON.stringify(config.voice_narration));
+        if (config.voice_narration) {
+            narrate_move('Voice narration enabled.');
+        } else {
+            window.speechSynthesis.cancel();
+        }
+        push_config();
+    });
+
+    document.getElementById('voice_gender_select').addEventListener('change', (e) => {
+        config.voice_gender = e.target.value;
+        localStorage.setItem('voice_gender', JSON.stringify(config.voice_gender));
+        if (config.voice_narration) {
+            narrate_move(config.voice_gender === 'female' ? 'Female voice selected.' : 'Male voice selected.');
+        }
     });
 
     document.getElementById('move_display_select').value = config.move_display;
@@ -395,6 +453,7 @@ function on_engine_best_move(best, threat, isTerminal = false) {
             } else {
                 update_best_move(`${next} Wins`, '');
             }
+            if (isTerminal) narrate_move('Checkmate!');
         } else {
             update_evaluation('Stalemate!');
             if (config.variant === 'antichess') {
@@ -402,6 +461,7 @@ function on_engine_best_move(best, threat, isTerminal = false) {
             } else {
                 update_best_move('Draw', '');
             }
+            if (isTerminal) narrate_move('Stalemate. Draw.');
         }
     } else if (config.simon_says_mode) {
         if (toplay.toLowerCase() === board.orientation()) {
@@ -446,6 +506,13 @@ function on_engine_best_move(best, threat, isTerminal = false) {
                 draw_threat();
             }
         }
+
+        // Voice narration — only on terminal (final) best move
+        if (isTerminal && best !== '(none)') {
+            const narration = build_narration(best, piece_name_map);
+            narrate_move(narration);
+        }
+
         if (config.autoplay && isTerminal) {
             if (config.human_mode) {
                 // Random delay: weighted towards shorter times, occasionally longer
@@ -467,6 +534,97 @@ function on_engine_best_move(best, threat, isTerminal = false) {
     }
 
     toggle_calculating(false);
+}
+
+function build_narration(best, piece_name_map) {
+    const file_names = { a: 'A', b: 'B', c: 'C', d: 'D', e: 'E', f: 'F', g: 'G', h: 'H' };
+    const fromSquare = best.substring(0, 2);
+    const toSquare = best.substring(2, 4);
+    const promotion = best[4];
+
+    // Identify the piece
+    const position = board.position();
+    const piece = position[fromSquare];
+    let pieceName = 'Piece';
+    if (piece) {
+        const pieceType = piece.substring(1); // e.g. 'N', 'P'
+        pieceName = piece_name_map[pieceType] || 'Piece';
+    }
+
+    // Build source and destination strings
+    const srcFile = file_names[fromSquare[0]] || fromSquare[0];
+    const srcRank = fromSquare[1];
+    const destFile = file_names[toSquare[0]] || toSquare[0];
+    const destRank = toSquare[1];
+
+    // "Move the Knight which is at E2 to F3"
+    let text = `Move the ${pieceName} which is at ${srcFile} ${srcRank} to ${destFile} ${destRank}`;
+
+    // Promotion
+    if (promotion) {
+        const promoNames = { q: 'Queen', r: 'Rook', b: 'Bishop', n: 'Knight' };
+        text += `, promotes to ${promoNames[promotion] || promotion}`;
+    }
+
+    // Evaluation — only if narrate_eval is enabled (read live from localStorage)
+    const shouldNarrateEval = JSON.parse(localStorage.getItem('narrate_eval')) || false;
+    if (shouldNarrateEval) {
+        const lineInfo = last_eval.lines[0];
+        if (lineInfo) {
+            if ('mate' in lineInfo) {
+                text += ` and its evaluation is mate in ${Math.abs(lineInfo.mate)}`;
+            } else if ('score' in lineInfo) {
+                const score = lineInfo.score / 100.0;
+                const sign = score > 0 ? 'plus' : score < 0 ? 'minus' : '';
+                text += ` and its evaluation is ${sign} ${Math.abs(score).toFixed(1)}`;
+            }
+        }
+    }
+
+    return text;
+}
+
+function narrate_move(text) {
+    if (!config.voice_narration) return;
+    if (!('speechSynthesis' in window)) {
+        console.warn('Voice narration: speechSynthesis not supported in this browser.');
+        return;
+    }
+    window.speechSynthesis.cancel(); // stop any in-progress narration
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 1.05;
+    utterance.volume = 0.85;
+
+    // Read gender fresh from localStorage so General/Quick Settings changes apply immediately
+    const gender = JSON.parse(localStorage.getItem('voice_gender')) || 'male';
+
+    // Use cached voices (pre-loaded on startup via onvoiceschanged)
+    const voices = cachedVoices.length > 0 ? cachedVoices : window.speechSynthesis.getVoices();
+    const enVoices = voices.filter(v => v.lang.startsWith('en'));
+
+    console.log(`Voice narration: gender=${gender}, available voices=${enVoices.length}`);
+
+    let preferred;
+    if (gender === 'female') {
+        utterance.pitch = 1.15;
+        // Try to find a female voice explicitly
+        preferred = enVoices.find(v => /female/i.test(v.name))
+            || enVoices.find(v => /zira|samantha|karen|fiona|victoria|hazel|susan|linda/i.test(v.name))
+            || enVoices[1]  // second voice is often female
+            || enVoices[0];
+    } else {
+        utterance.pitch = 0.9;
+        // Try to find a male voice — exclude any voice with "female" in the name
+        preferred = enVoices.find(v => /\bmale\b/i.test(v.name) && !/female/i.test(v.name))
+            || enVoices.find(v => /david|james|daniel|mark|richard/i.test(v.name))
+            || enVoices[0];
+    }
+
+    if (preferred) {
+        utterance.voice = preferred;
+        console.log(`Voice narration: using voice "${preferred.name}"`);
+    }
+    window.speechSynthesis.speak(utterance);
 }
 
 function on_engine_evaluation(info) {
@@ -693,6 +851,16 @@ function format_pv_moves(pvString) {
 
 function update_multipv_display(info) {
     if (!config.computer_evaluation) return;
+
+    const mateStatusEl = document.getElementById('mate-status');
+    if (mateStatusEl) {
+        if (info.lines[0] && 'mate' in info.lines[0] && Math.abs(info.lines[0].mate) <= 10) {
+            mateStatusEl.innerText = `Checkmate in ${info.lines[0].mate}`;
+            mateStatusEl.style.display = 'block';
+        } else {
+            mateStatusEl.style.display = 'none';
+        }
+    }
 
     for (let i = 0; i < MULTIPV_DISPLAY_COUNT; i++) {
         const el = document.getElementById(`pv-line-${i + 1}`);

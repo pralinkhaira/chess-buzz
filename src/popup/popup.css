@@ -11,7 +11,52 @@ body {
     text-overflow: clip;
     text-align: center;
     white-space: nowrap;
-    transition: width 0.3s ease-in-out;
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
+body.popup-collapsed,
+html.popup-collapsed {
+    height: 32px !important;
+    width: 32px !important;
+    min-width: 32px !important;
+}
+
+body.popup-collapsed #board,
+body.popup-collapsed #moves,
+body.popup-collapsed #multipv-container,
+body.popup-collapsed #action-buttons-container,
+body.popup-collapsed #move-annotations,
+body.popup-collapsed #response-annotations,
+body.popup-collapsed #heatmap-annotations,
+body.popup-collapsed #welcome-tooltip,
+body.popup-collapsed #github-link,
+body.popup-collapsed #game-detection {
+    display: none !important;
+}
+
+body.popup-collapsed #main-content {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+body.popup-collapsed #status-container {
+    height: 32px !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+body.popup-collapsed #collapse-toggle {
+    position: static !important;
+    opacity: 0.8;
+    font-size: 20px;
+    line-height: 32px;
+    cursor: pointer;
+}
+
+body.popup-collapsed #quick-settings-panel {
+    display: none !important;
 }
 
 body.quick-settings-open,
@@ -240,6 +285,9 @@ body.dark-mode {
     margin: 6px 75px 0 8px;
     text-align: left;
     white-space: normal;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
 }
 
 #multipv-header {
@@ -364,7 +412,8 @@ body.dark-mode .pv-score.mate {
 
 #developer-watermark {
     display: block;
-    margin-top: 8px;
+    margin-top: auto;
+    /* push to the bottom of the container */
     font-size: 10px;
     color: #e53935;
     text-align: center;
@@ -412,6 +461,22 @@ body.dark-mode #developer-watermark:hover {
 }
 
 #github-link:hover {
+    opacity: 0.8;
+    color: #ff4081;
+}
+
+#collapse-toggle {
+    position: absolute;
+    right: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--text-color);
+    opacity: 0.4;
+    transition: opacity 0.2s, color 0.2s;
+    user-select: none;
+}
+
+#collapse-toggle:hover {
     opacity: 0.8;
     color: #ff4081;
 }

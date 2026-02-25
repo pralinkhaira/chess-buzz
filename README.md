@@ -13,6 +13,41 @@
 
 ## Update History
 
+### Update V3: 25/02/2026 (Voice Narration, Popup Minimize, Smart Checkmate Tracker)
+
+**Voice Narration - "The Narrator"**
+
+Chess Buzz can now **speak the best move aloud** using the browser's built-in text-to-speech engine. Perfect for keeping your eyes on the board while the extension coaches you.
+
+- **Natural narration format**: *"Move the Knight which is at G1 to F3"*
+- **Voice Gender selection**: Choose between **Male** and **Female** voices from both the popup Quick Settings (dropdown) and the full Settings page (radio buttons).
+- **Optional evaluation narration**: Toggle *"Narrate Evaluation"* in General Settings to append scores: *"…and its evaluation is plus 0.8"* (off by default).
+- **Voice pre-loading**: Voices are cached at startup via `onvoiceschanged` to prevent the empty-voices bug in Chrome.
+- **Terminal state callouts**: Automatically announces *"Checkmate!"* and *"Stalemate. Draw."*
+
+**Popup Minimize (Eye Icon)**
+
+A new **eye icon** (👁) in the status bar lets you collapse the popup to a tiny square, showing only the icon. The engine and voice narration keep running in the background.
+
+- **Persistent state**: Collapsed/expanded state is saved across reloads.
+- **Smooth transition**: Height and width animate with a 0.3s ease-in-out.
+- **One-click expand**: Click the eye icon again to restore the full popup.
+
+**Live Settings Sync**
+
+Settings changed in the popup are now **instantly reflected** in the General Settings page (and vice versa) using the `storage` event API. No more stale toggles when switching between views.
+
+**Smart Checkmate Tracker**
+
+- A new "Checkmate in X" indicator explicitly appears at the bottom of the popup only when a forced mate sequence is 10 moves or fewer away, helping you easily spot winning variations.
+
+**Book UI Polish**
+
+- **Page numbers repositioned** to the **top-right corner** of every book page for a cleaner layout.
+- **Voice Gender** uses **radio buttons** instead of a dropdown in the book UI to prevent overflow.
+- **Radio button support** added to the `FormElement` framework for future use.
+
+
 ### Update V2: 24/02/2026 (Popup Multi-PV Redesign)
 
 **Multi-PV Engine Display**

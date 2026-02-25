@@ -191,10 +191,8 @@
 
 .page-number {
     position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 100%;
-    text-align: center;
+    top: -8px;
+    right: 0;
     font-family: 'Playfair Display', serif;
     font-weight: 600;
     color: #7b6957;
